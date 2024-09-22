@@ -33,4 +33,18 @@ public class ReviewServiceImpl implements ReviewService {
         }
         return false;
     }
+
+    @Override
+    public Review getReview(Long companyId, Long reviewId) {
+        Company company = companyService.getCompanyById(companyId);
+        if(company != null){
+            Review review = reviewRepository.findById(reviewId).orElse(null);
+            if(review != null){
+                review.setCompany(company);
+                reviewRepository.save(review);
+            }
+            return review;
+        }
+    return null;
+    }
 }
